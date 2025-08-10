@@ -1,1 +1,596 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoTcloudServe@TEIN - Data-Centric IoT-Cloud Service Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #9A2AA0;
+            --secondary: #DA3FA3;
+            --body: #FCF5EC;
+            --text: #1D1D1B;
+            --secondary-dark: #4E245C;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--body);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--white);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--secondary-dark), var(--primary));
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(218, 63, 163, 0.3);
+        }
+
+        /* Partners Section */
+        .partners {
+            background: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .partners h2 {
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .partner-logos img {
+            height: 80px;
+            width: auto;
+            opacity: 0.8;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .partner-logos img:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            background: var(--light-gray);
+        }
+
+        .features h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Demo Sites */
+        .demo-sites {
+            padding: 4rem 0;
+            background: var(--body);
+        }
+
+        .demo-sites h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .demo-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .demo-card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 1.5rem;
+        }
+
+        .demo-card-body {
+            padding: 2rem;
+        }
+
+        .demo-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-card .location {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Outcomes Section */
+        .outcomes {
+            padding: 4rem 0;
+            background: var(--white);
+        }
+
+        .outcomes h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .outcomes-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .outcome-item {
+            background: var(--body);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+            transition: transform 0.3s;
+        }
+
+        .outcome-item:hover {
+            transform: translateX(5px);
+        }
+
+        .outcome-item h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* SDGs Section */
+        .sdgs {
+            padding: 3rem 0;
+            background: var(--secondary-dark);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .sdg-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .sdg-badge {
+            background: var(--secondary);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .sdg-badge:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .partner-logos {
+                gap: 1.5rem;
+            }
+
+            .partner-logos img {
+                height: 60px;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .outcomes-list {
+                grid-template-columns: 1fr;
+            }
+
+            .sdg-badges {
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .features, .demo-sites, .outcomes {
+                padding: 2rem 0;
+            }
+
+            .partner-logos img {
+                height: 50px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">IoTcloudServe@TEIN</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#demo">Demo Sites</a></li>
+                <li><a href="#outcomes">Outcomes</a></li>
+                <li><a href="#partners">Partners</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="fade-in-up">Data-Centric IoT-Cloud Service Platform for Smart Communities</h1>
+            <p class="fade-in-up">Empowering TEIN communities with centralized IoT storage, analytics, and gateway services across Thailand and Laos</p>
+            <a href="#features" class="cta-button fade-in-up">Explore Platform</a>
+        </div>
+    </section>
+
+    <section id="partners" class="partners">
+        <div class="container">
+            <h2>Supported By</h2>
+            <div class="partner-logos">
+                <img src="images/logos/tein-logo.png" alt="TEIN Cooperation Center" title="TEIN Cooperation Center">
+                <img src="images/logos/asia-connect-logo.png" alt="Asia@Connect" title="Asia@Connect">
+                <img src="images/logos/eu-logo.png" alt="European Union" title="European Union">
+            </div>
+            <p>A collaborative initiative involving Thailand, Laos, Malaysia, Japan, and Korea</p>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Key Platform Capabilities</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in-up">
+                    <h3>Centralized IoT Storage</h3>
+                    <p>Secure, scalable data storage infrastructure hosted in Thailand's Data Lake, accessible to all TEIN communities for IoT data management and archival.</p>
+                </div>
+                <div class="feature-card fade-in-up">
+                    <h3>Analytics Compute Pool</h3>
+                    <p>Powerful distributed computing resources enabling real-time data processing, machine learning, and advanced analytics for smart community applications.</p>
+                </div>
+                <div class="feature-card fade-in-up">
+                    <h3>IoT Access Gateway</h3>
+                    <p>Unified API gateway providing seamless connectivity and integration capabilities for diverse IoT devices and applications across the TEIN network.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo" class="demo-sites">
+        <div class="container">
+            <h2>Demonstration Sites</h2>
+            <div class="demo-grid">
+                <div class="demo-card fade-in-up">
+                    <div class="demo-card-header">
+                        <h3>Smart-Energy/Mobility@Chula</h3>
+                        <p class="location">Chulalongkorn University, Thailand</p>
+                    </div>
+                    <div class="demo-card-body">
+                        <p>Comprehensive smart energy management and mobility solutions showcasing IoT-enabled campus optimization, energy efficiency monitoring, and sustainable transportation systems.</p>
+                    </div>
+                </div>
+                <div class="demo-card fade-in-up">
+                    <div class="demo-card-header">
+                        <h3>Smart-Agriculture@NUOL</h3>
+                        <p class="location">National University of Laos, Laos</p>
+                    </div>
+                    <div class="demo-card-body">
+                        <p>Advanced agricultural IoT system featuring greenhouse monitoring, crop optimization, and precision farming techniques. Winner of best poster presentation at AINTEC/CFI 2019.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="outcomes" class="outcomes">
+        <div class="container">
+            <h2>Key Achievements</h2>
+            <div class="outcomes-list">
+                <div class="outcome-item fade-in-up">
+                    <h4>Platform Deployment</h4>
+                    <p>Successfully designed, developed, and deployed centralized IoT-cloud service platform serving TEIN communities</p>
+                </div>
+                <div class="outcome-item fade-in-up">
+                    <h4>Open Source Library</h4>
+                    <p>Comprehensive software library and demonstration materials publicly available on GitHub</p>
+                </div>
+                <div class="outcome-item fade-in-up">
+                    <h4>Knowledge Transfer</h4>
+                    <p>Conducted workshops and site visits facilitating significant knowledge transfer to partner institutions</p>
+                </div>
+                <div class="outcome-item fade-in-up">
+                    <h4>Academic Publications</h4>
+                    <p>Generated numerous conference and journal publications disseminating research insights</p>
+                </div>
+                <div class="outcome-item fade-in-up">
+                    <h4>Award Recognition</h4>
+                    <p>Smart-Agriculture@NUOL team received best poster presentation award at AINTEC/CFI 2019</p>
+                </div>
+                <div class="outcome-item fade-in-up">
+                    <h4>Community Impact</h4>
+                    <p>Established foundation for wider R&E community adoption and service diversification</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sdgs">
+        <div class="container">
+            <h2>Contributing to Sustainable Development Goals</h2>
+            <div class="sdg-badges">
+                <div class="sdg-badge">SDG 9: Industry, Innovation & Infrastructure</div>
+                <div class="sdg-badge">SDG 11: Sustainable Cities & Communities</div>
+                <div class="sdg-badge">SDG 13: Climate Action</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 IoTcloudServe@TEIN. A collaborative project under TEIN*CC 2nd Call WP4.</p>
+            <p>Partner institutions: Chulalongkorn University, GIST, NUOL, NECTEC, UNINET, University of Malaya, University of Tokyo</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .demo-card, .outcome-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(154, 42, 160, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
